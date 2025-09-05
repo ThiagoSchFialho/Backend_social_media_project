@@ -17,8 +17,8 @@ CREATE TABLE friends (
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     text TEXT NOT NULL,
-    "dateTime" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    mediaUrl VARCHAR(255),
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    media_url VARCHAR(255),
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -26,7 +26,7 @@ CREATE TABLE posts (
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     text TEXT NOT NULL,
-    "dateTime" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
@@ -36,7 +36,7 @@ CREATE TABLE comments (
 CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     text TEXT NOT NULL,
-    "dateTime" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     comment_id INT,
     parent_answer_id INT,
     user_id INT NOT NULL,

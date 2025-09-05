@@ -5,13 +5,13 @@ import { IPostsModel } from "./interfaces/posts.model.interface";
 
 export class PostsModel implements IPostsModel {
     
-    async createPost(text: string, dateTime: string, mediaUrl: string, user_id: number): Promise<Posts> {
+    async createPost(text: string, date_time: string, media_url: string, user_id: number): Promise<Posts> {
         try {
             const result: QueryResult<Posts> = await pool.query(`
-                INSERT INTO posts (text, dateTime, mediaUrl, user_id)
+                INSERT INTO posts (text, date_time, media_url, user_id)
                 VALUES ($1, $2, $3, $4)
                 RETURNING *;
-            `,[text, dateTime, mediaUrl, user_id]);
+            `,[text, date_time, media_url, user_id]);
 
             return result.rows[0];
 
@@ -61,14 +61,14 @@ export class PostsModel implements IPostsModel {
         }
     }
     
-    async updatePost(id: number, text: string, dateTime: string, mediaUrl: string): Promise<Posts> {
+    async updatePost(id: number, text: string, date_time: string, media_url: string): Promise<Posts> {
         try {
             const result: QueryResult<Posts> = await pool.query(`
                 UPDATE posts
-                SET text = $1, dateTime = $2, mediaUrl = $3
+                SET text = $1, date_time = $2, media_url = $3
                 WHERE id = $4
                 RETURNING *;
-            `,[text, dateTime, mediaUrl, id]);
+            `,[text, date_time, media_url, id]);
 
             return result.rows[0];
 

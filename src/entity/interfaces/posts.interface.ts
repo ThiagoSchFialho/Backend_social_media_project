@@ -1,7 +1,7 @@
 export interface IPosts {
     id?: number;
     text: string;
-    dateTime: string;
-    mediaUrl: string;
+    date_time: string;
+    media_url: string;
     user_id: number
 }
