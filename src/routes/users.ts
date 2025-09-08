@@ -10,17 +10,17 @@ router.get('/:user_id', async function (req: Request, res: Response, next: any) 
 
   try {
     if (!user_id || isNaN(Number(user_id))) {
-      return res.status(400).json({ error: 'user_id inválido' });
+      return res.status(400).json({ success: false, error: 'user_id inválido' });
     }
 
     const user = await usersModel.getUser(Number(user_id));
-    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+    if (!user) return res.status(404).json({ success: false, error: 'Usuário não encontrado' });
 
-    return res.status(200).json(user);
+    return res.status(200).json({ success: true, data: user });
 
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
   }
 });
 
@@ -28,16 +28,16 @@ router.get('/', async function (req: Request, res: Response) {
   const { email } = req.query;
 
   try {
-    if (!email) return res.status(400).json({ error: 'Email indefinido' });
+    if (!email) return res.status(400).json({ success: false, error: 'Email indefinido' });
 
     const user = await usersModel.getUserByEmail(String(email));
-    if (!user) return res.status(404).json({ message: 'Usuário não encontrado' });
+    if (!user) return res.status(404).json({ success: false, error: 'Usuário não encontrado' });
 
-    return res.status(200).json(user);
+    return res.status(200).json({ success: true, data: user });
 
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
   }
 });
 
@@ -46,20 +46,20 @@ router.post('/', async function (req: Request, res: Response) {
 
   try {
     if (!email || !password || !name) {
-      return res.status(400).json({ error: 'Campos obrigatórios não informados' });
+      return res.status(400).json({ success: false, error: 'Campos obrigatórios não informados' });
     }
 
     const user = await usersModel.getUserByEmail(email);
-    if (user) return res.status(409).json({ message: 'Email informado já está em uso' });
+    if (user) return res.status(409).json({ success: false, error: 'Email informado já está em uso' });
 
     const newUser = await usersModel.createUser(email, password, name);
-    if (!newUser) return res.status(500).json({ error: 'Erro ao criar usuário' });
+    if (!newUser) return res.status(500).json({ success: false, error: 'Erro ao criar usuário' });
 
-    return res.status(201).json(newUser);
+    return res.status(201).json({ success: true, data: newUser });
 
   } catch (error: any){
     console.error(error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
   }
 });
 
@@ -69,23 +69,23 @@ router.put('/:user_id', async function (req: Request, res: Response) {
 
   try {
     if (!user_id || isNaN(Number(user_id))) {
-      return res.status(400).json({ error: 'user_id inválido' });
+      return res.status(400).json({ success: false, error: 'user_id inválido' });
     }
     if (!email || !password || !name) {
-      return res.status(400).json({ error: 'Campos obrigatórios não informados' });
+      return res.status(400).json({ success: false, error: 'Campos obrigatórios não informados' });
     }
 
     const user = await usersModel.getUser(Number(user_id));
-    if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+    if (!user) return res.status(404).json({ success: false, error: 'Usuário não encontrado' });
 
     const updatedUser = await usersModel.updateUser(Number(user_id), email, password, name);
-    if (!updatedUser) return res.status(500).json({ error: 'Erro ao atualizar usuário' });
+    if (!updatedUser) return res.status(500).json({ success: false, error: 'Erro ao atualizar usuário' });
 
-    return res.status(200).json(updatedUser);
+    return res.status(200).json({ success: true, data: updatedUser });
 
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
   }
 });
 
@@ -94,17 +94,17 @@ router.delete('/:user_id', async function (req: Request, res: Response) {
 
   try {
     if (!user_id || isNaN(Number(user_id))) {
-      return res.status(400).json({ error: 'user_id inválido' });
+      return res.status(400).json({ success: false, error: 'user_id inválido' });
     }
 
     const deleted = await usersModel.deleteUser(Number(user_id));
-    if (!deleted) return res.status(404).json({ error: 'Usuário não encontrado' });
+    if (!deleted) return res.status(404).json({ success: false, error: 'Usuário não encontrado' });
 
 
-    return res.status(200).json({ message: 'Usuário excluido com sucesso' });
+    return res.status(200).json({ success: true, data: { message: 'Usuário excluido com sucesso' } });
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ success: false, error: 'Erro interno do servidor' });
   }
 });
 
