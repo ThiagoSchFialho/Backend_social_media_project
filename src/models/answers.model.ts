@@ -19,6 +19,20 @@ export class AnswersModel implements IAnswersModel{
             throw new Error(`Erro ao criar resposta: ${error.message}`);
         }
     }
+
+    async getAnswer(id: number): Promise<Answers> {
+        try {
+            const result: QueryResult = await pool.query(`
+                SELECT * FROM answers
+                WHERE id = $1;
+            `, [id]);
+
+            return result.rows[0];
+
+        } catch (error: any) {
+            throw new Error(`Erro ao recuperar resposta: ${error.message}`);
+        }
+    }
     
     async getByComment(comment_id: number): Promise<Answers[]> {
         try {
