@@ -19,6 +19,20 @@ export class CommentsModel implements ICommentsModel{
             throw new Error(`Erro ao criar comentário: ${error.message}`);
         }
     }
+
+    async getComment(id: number): Promise<Comments> {
+        try {
+            const result: QueryResult<Comments> = await pool.query(`
+                SELECT * FROM comments
+                WHERE id = $1;    
+            `, [id]);
+
+            return result.rows[0];
+
+        } catch (error: any) {
+            throw new Error(`Erro ao recuperar comentáros: ${error.message}`);
+        }
+    }
     
     async getComments(post_id: number): Promise<Comments[]> {
         try {
