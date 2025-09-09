@@ -5,6 +5,11 @@ var router = express.Router();
 import { UsersModel } from '../models/users.model';
 const usersModel = new UsersModel();
 
+
+/**
+ * GET /users/:user_id
+ * Recupera um usuário
+ */
 router.get('/:user_id', async function (req: Request, res: Response, next: any) {
   const { user_id } = req.params;
 
@@ -24,6 +29,10 @@ router.get('/:user_id', async function (req: Request, res: Response, next: any) 
   }
 });
 
+/**
+ * GET /users/
+ * Recupera um usuário pelo email
+ */
 router.get('/', async function (req: Request, res: Response) {
   const { email } = req.query;
 
@@ -41,6 +50,10 @@ router.get('/', async function (req: Request, res: Response) {
   }
 });
 
+/**
+ * POST /users/
+ * Cria um novo usuário
+ */
 router.post('/', async function (req: Request, res: Response) {
   const { email, password, name } = req.body;
 
@@ -63,6 +76,10 @@ router.post('/', async function (req: Request, res: Response) {
   }
 });
 
+/**
+ * PUT /users/:user_id
+ * Atualiza um usuário
+ */
 router.put('/:user_id', async function (req: Request, res: Response) {
   const { user_id } = req.params;
   const { email, password, name } = req.body;
@@ -89,6 +106,10 @@ router.put('/:user_id', async function (req: Request, res: Response) {
   }
 });
 
+/**
+ * DELETE /users/:user_id
+ * Exclui um usuário
+ */
 router.delete('/:user_id', async function (req: Request, res: Response) {
   const { user_id } = req.params;
 
