@@ -6,6 +6,10 @@ import { PostsModel } from '../models/posts.model';
 const postsModel = new PostsModel();
 
 
+/**
+ * GET /posts/:id
+ * Retorna um post
+ */
 router.get('/:id', async function (req: Request, res: Response) {
     const { id } = req.params;
 
@@ -27,6 +31,10 @@ router.get('/:id', async function (req: Request, res: Response) {
     }
 });
 
+/**
+ * GET /posts/user/:user_id
+ * Retorna todos os posts de um usuário
+ */
 router.get('/user/:user_id', async function (req: Request, res: Response) {
     const { user_id } = req.params;
 
@@ -48,6 +56,10 @@ router.get('/user/:user_id', async function (req: Request, res: Response) {
     }
 });
 
+/**
+ * GET /posts/
+ * Retorna todos os posts
+ */
 router.get('/', async function (req: Request, res: Response) {
     try {
         const posts = await postsModel.getAllPosts();
@@ -63,6 +75,10 @@ router.get('/', async function (req: Request, res: Response) {
     }
 });
 
+/**
+ * POST /posts/:user_id
+ * Cria um post
+ */
 router.post('/:user_id', async function (req: Request, res: Response) {
     const { user_id } = req.params;
     const { text, date_time, media_url } = req.body;
@@ -91,6 +107,10 @@ router.post('/:user_id', async function (req: Request, res: Response) {
     }
 });
 
+/**
+ * PATCH /posts/:id
+ * Atualiza um post
+ */
 router.patch('/:id', async function (req: Request, res: Response) {
     const { id } = req.params;
     const { text, date_time, media_url } = req.body;
@@ -124,6 +144,10 @@ router.patch('/:id', async function (req: Request, res: Response) {
     }
 });
 
+/**
+ * DELETE /posts/:id
+ * Exclui um post
+ */
 router.delete('/:id', async function (req: Request, res: Response) {
     const { id } = req.params;
 
