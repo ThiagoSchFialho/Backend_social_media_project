@@ -3,5 +3,5 @@ export interface IPosts {
     text: string;
     date_time: string;
     media_url: string;
-    user_id: number
+    user_id: number;
 }
